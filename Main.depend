@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1733233575 source:c:\users\hafidz z\documents\tubes std\main\main.cpp
+	"graph.h"
+
+1733233452 c:\users\hafidz z\documents\tubes std\main\graph.h
+	<iostream>
+	<vector>
+	<map>
+	<limits>
+	<string>
+
