@@ -1,50 +1,80 @@
-#include "graph.h"
+#include "transport.h"
 
 int main() {
-    Graph graph;
+    transportNetwork cityTransport;
+    initNetwork(cityTransport);
 
-    // Add edges
-    graph.addEdge(1, 2, 4);
-    graph.addEdge(1, 3, 2);
-    graph.addEdge(2, 3, 1);
-    graph.addEdge(2, 4, 5);
-    graph.addEdge(3, 4, 8);
-    graph.addEdge(4, 5, 6);
+    int pilihan;
+    string startID, destID, blockedID;
+    int roadLength, safetyScore;
 
-    // Set traffic levels
-    graph.setTraffic(1, 10);
-    graph.setTraffic(2, 20);
-    graph.setTraffic(3, 15);
-    graph.setTraffic(4, 30);
-    graph.setTraffic(5, 5);
+    do {
+        cout << "==============================================";
+        cout << "\n   Selamat Datang di Aplikasi Transportasi  " << endl;
+        cout << "==============================================" << endl;
+        cout << "1. Tambah Persimpangan" << endl;
+        cout << "2. Tambah Jalan" << endl;
+        cout << "3. Tampilkan Jaringan Transportasi" << endl;
+        cout << "4. Cari Rute Terpendek" << endl;
+        cout << "5. Cari Rute Teraman" << endl;
+        cout << "6. Cari Rute Darurat" << endl;
+        cout << "0. Keluar" << endl;
+        cout << "Pilihan Anda: ";
+        cin >> pilihan;
+        cin.ignore();
 
-    // Shortest path
-    cout << "Shortest Path from 1 to 5: ";
-    vector<int> path = graph.shortestPath(1, 5);
-    for (int node : path) cout << node << " ";
-    cout << endl;
-
-    // Find busiest node
-    int busiestNode = graph.findBusiestNode();
-    cout << "Busiest Node: " << busiestNode << endl;
-
-    // Safe route avoiding a specific node
-    cout << "Safe Route from 1 to 5 avoiding node 4: ";
-    vector<int> safePath = graph.safeRoute(1, 5, 4);
-    for (int node : safePath) cout << node << " ";
-    cout << endl;
-
-    // Path with the lowest total weight
-    cout << "Path with Lowest Weight from 1 to 5: ";
-    vector<int> lowWeightPath = graph.lowestWeightPath(1, 5);
-    for (int node : lowWeightPath) cout << node << " ";
-    cout << endl;
-
-    // All reachable nodes from a start node
-    cout << "Nodes Reachable from 1: ";
-    vector<int> reachable = graph.reachableNodes(1);
-    for (int node : reachable) cout << node << " ";
-    cout << endl;
+        switch (pilihan) {
+        case 1:
+            cout << "Masukkan Nama Persimpangan: ";
+            getline(cin, startID);
+            addIntersection(cityTransport, startID);
+            break;
+        case 2:
+            cout << "Masukkan Persimpangan Asal: ";
+            getline(cin, startID);
+            cout << "Masukkan Persimpangan Tujuan: ";
+            getline(cin, destID);
+            cout << "Masukkan Panjang Jalan (km): ";
+            cin >> roadLength;
+            cout << "Masukkan Skor Keamanan Jalan (1-10): ";
+            cin >> safetyScore;
+            cin.ignore();
+            addRoad(cityTransport, startID, destID, roadLength, safetyScore);
+            break;
+        case 3:
+            cout << "\n========= Jaringan Transportasi Kota =========" << endl;
+            printNetwork(cityTransport);
+            break;
+        case 4:
+            cout << "Masukkan Persimpangan Asal: ";
+            getline(cin, startID);
+            cout << "Masukkan Persimpangan Tujuan: ";
+            getline(cin, destID);
+            searchByShortestPath(cityTransport, startID, destID);
+            break;
+        case 5:
+            cout << "Masukkan Persimpangan Asal: ";
+            getline(cin, startID);
+            cout << "Masukkan Persimpangan Tujuan: ";
+            getline(cin, destID);
+            searchBySafestPath(cityTransport, startID, destID);
+            break;
+        case 6:
+            cout << "Masukkan Persimpangan Asal: ";
+            getline(cin, startID);
+            cout << "Masukkan Persimpangan Tujuan: ";
+            getline(cin, destID);
+            cout << "Masukkan Persimpangan yang Harus Dihindari (contoh: A): ";
+            getline(cin, blockedID);
+            findEmergencyRoute(cityTransport, startID, destID, blockedID);
+            break;
+        case 0:
+            cout << "Terima kasih telah menggunakan aplikasi kami dan sampai jumpa!" << endl;
+            break;
+        default:
+            cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
+        }
+    } while (pilihan != 0);
 
     return 0;
 }
