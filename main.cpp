@@ -69,7 +69,8 @@ int main() {
             cin.getline(destID, 50);
             cout << "Masukkan Persimpangan yang Harus Dihindari (contoh: Simpang Dago): ";
             cin.getline(blockedID, 50);
-            findEmergencyRoute(cityTransport, startID, destID, blockedID);
+            searchByEmergencyRoute(cityTransport, startID, destID, blockedID);
+
             break;
         case 0:
             cout << "Terima kasih telah menggunakan aplikasi kami. Sampai jumpa!" << endl;
