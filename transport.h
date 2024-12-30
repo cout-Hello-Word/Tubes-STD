@@ -18,14 +18,14 @@ typedef struct intersection *adrIntersection;
 typedef struct road *adrRoad;
 
 struct intersection {
-    char intersectionID[50]; // Mengganti std::string dengan char[]
+    char intersectionID[50]; 
     adrIntersection nextIntersection;
     adrRoad firstRoad;
     bool isBlocked;
 };
 
 struct road {
-    char destIntersectionID[50]; // Mengganti std::string dengan char[]
+    char destIntersectionID[50]; 
     int length;
     int safetyScore;
     adrRoad nextRoad;
