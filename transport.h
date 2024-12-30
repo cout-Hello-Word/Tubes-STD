@@ -43,6 +43,6 @@ void printNetwork(transportNetwork &N);
 void updateIntersectionStatus(transportNetwork &N);
 void searchByShortestPath(transportNetwork &N, const char *startIntersectionID, const char *targetIntersectionID);
 void searchBySafestPath(transportNetwork &N, const char *startIntersectionID, const char *targetIntersectionID);
-void findEmergencyRoute(transportNetwork &N, const char *startIntersectionID, const char *targetIntersectionID, const char *blockedIntersections);
+void searchByEmergencyRoute(transportNetwork &N, const char *startIntersectionID, const char *targetIntersectionID, const char *avoidIntersectionID);
 
 #endif // TRANSPORT_H_INCLUDED
