@@ -2,7 +2,7 @@
 
 void createIntersection(const char *newIntersectionID, adrIntersection &I) {
     I = new intersection;
-    strcpy(I->intersectionID, newIntersectionID); // Menggunakan strcpy
+    strcpy(I->intersectionID, newIntersectionID); 
     I->nextIntersection = nullptr;
     I->firstRoad = nullptr;
     I->isBlocked = false;
@@ -34,7 +34,7 @@ void addRoad(transportNetwork &N, const char *fromIntersectionID, const char *to
 
     if (from != nullptr) {
         adrRoad newRoad = new road;
-        strcpy(newRoad->destIntersectionID, toIntersectionID); // Menggunakan strcpy
+        strcpy(newRoad->destIntersectionID, toIntersectionID); 
         newRoad->length = length;
         newRoad->safetyScore = safetyScore;
         newRoad->nextRoad = firstRoad(from);
@@ -92,7 +92,7 @@ void searchByShortestPath(transportNetwork &N, const char *startIntersectionID, 
         target = nextIntersection(target);
     }
 
-    // Validasi apakah simpang ditemukan
+    
     if (!start || !target) {
         cout << "Simpang asal atau tujuan tidak ditemukan!" << endl;
         return;
@@ -100,11 +100,11 @@ void searchByShortestPath(transportNetwork &N, const char *startIntersectionID, 
 
     cout << "Mencari rute terpendek dari " << startIntersectionID << " ke " << targetIntersectionID << "..." << endl;
 
-    // Variabel untuk melacak jalur
+    
     char route[500] = "";
     int totalDistance = 0;
 
-    // Iterasi melalui jalan dari simpang asal
+    
     adrIntersection current = start;
     while (current != nullptr && strcmp(intersectionID(current), targetIntersectionID) != 0) {
         adrRoad shortestRoad = nullptr;
@@ -124,22 +124,22 @@ void searchByShortestPath(transportNetwork &N, const char *startIntersectionID, 
             return;
         }
 
-        // Tambahkan ke rute
+        
         strcat(route, intersectionID(current));
         strcat(route, " -> ");
         totalDistance += minLength;
 
-        // Lanjutkan ke simpang tujuan dari jalan terpendek
+        
         current = firstIntersection(N);
         while (current != nullptr && strcmp(intersectionID(current), destIntersectionID(shortestRoad)) != 0) {
             current = nextIntersection(current);
         }
     }
 
-    // Tambahkan simpang tujuan ke rute
+   
     strcat(route, targetIntersectionID);
 
-    // Tampilkan hasil
+    
     cout << "Rute Terpendek:" << endl;
     cout << route << endl;
     cout << "Total Panjang: " << totalDistance << " km" << endl;
@@ -149,17 +149,17 @@ void searchBySafestPath(transportNetwork &N, const char *startIntersectionID, co
     adrIntersection start = firstIntersection(N);
     adrIntersection target = firstIntersection(N);
 
-    // Cari simpang asal
+    
     while (start != nullptr && strcmp(intersectionID(start), startIntersectionID) != 0) {
         start = nextIntersection(start);
     }
 
-    // Cari simpang tujuan
+    
     while (target != nullptr && strcmp(intersectionID(target), targetIntersectionID) != 0) {
         target = nextIntersection(target);
     }
 
-    // Validasi apakah simpang ditemukan
+    
     if (!start || !target) {
         cout << "Simpang asal atau tujuan tidak ditemukan!" << endl;
         return;
@@ -167,11 +167,11 @@ void searchBySafestPath(transportNetwork &N, const char *startIntersectionID, co
 
     cout << "Mencari rute teraman dari " << startIntersectionID << " ke " << targetIntersectionID << "..." << endl;
 
-    // Variabel untuk melacak jalur
+    
     char route[500] = "";
     int totalSafetyScore = 0;
 
-    // Iterasi melalui jalan dari simpang asal
+    
     adrIntersection current = start;
     while (current != nullptr && strcmp(intersectionID(current), targetIntersectionID) != 0) {
         adrRoad safestRoad = nullptr;
@@ -191,22 +191,18 @@ void searchBySafestPath(transportNetwork &N, const char *startIntersectionID, co
             return;
         }
 
-        // Tambahkan ke rute
         strcat(route, intersectionID(current));
         strcat(route, " -> ");
         totalSafetyScore += maxSafetyScore;
 
-        // Lanjutkan ke simpang tujuan dari jalan teraman
         current = firstIntersection(N);
         while (current != nullptr && strcmp(intersectionID(current), destIntersectionID(safestRoad)) != 0) {
             current = nextIntersection(current);
         }
     }
 
-    // Tambahkan simpang tujuan ke rute
     strcat(route, targetIntersectionID);
 
-    // Tampilkan hasil
     cout << "Rute Teraman:" << endl;
     cout << route << endl;
     cout << "Total Skor Keamanan: " << totalSafetyScore << endl;
@@ -217,22 +213,18 @@ void searchByEmergencyRoute(transportNetwork &N, const char *startIntersectionID
     adrIntersection target = firstIntersection(N);
     adrIntersection avoid = firstIntersection(N);
 
-    // Cari simpang asal
     while (start != nullptr && strcmp(intersectionID(start), startIntersectionID) != 0) {
         start = nextIntersection(start);
     }
 
-    // Cari simpang tujuan
     while (target != nullptr && strcmp(intersectionID(target), targetIntersectionID) != 0) {
         target = nextIntersection(target);
     }
 
-    // Cari simpang yang harus dihindari
     while (avoid != nullptr && strcmp(intersectionID(avoid), avoidIntersectionID) != 0) {
         avoid = nextIntersection(avoid);
     }
 
-    // Validasi apakah simpang ditemukan
     if (!start || !target) {
         cout << "Simpang asal atau tujuan tidak ditemukan!" << endl;
         return;
@@ -244,11 +236,9 @@ void searchByEmergencyRoute(transportNetwork &N, const char *startIntersectionID
 
     cout << "Mencari rute darurat dari " << startIntersectionID << " ke " << targetIntersectionID << "..." << endl;
 
-    // Variabel untuk melacak jalur
     char route[500] = "";
     int totalDistance = 0;
 
-    // Iterasi melalui jalan dari simpang asal
     adrIntersection current = start;
     while (current != nullptr && strcmp(intersectionID(current), targetIntersectionID) != 0) {
         adrRoad shortestRoad = nullptr;
@@ -256,7 +246,6 @@ void searchByEmergencyRoute(transportNetwork &N, const char *startIntersectionID
 
         adrRoad R = firstRoad(current);
         while (R != nullptr) {
-            // Pastikan simpang tujuan dari jalan bukan simpang yang harus dihindari
             if (strcmp(destIntersectionID(R), intersectionID(avoid)) != 0 && roadLength(R) < minDistance) {
                 minDistance = roadLength(R);
                 shortestRoad = R;
@@ -269,22 +258,18 @@ void searchByEmergencyRoute(transportNetwork &N, const char *startIntersectionID
             return;
         }
 
-        // Tambahkan ke rute
         strcat(route, intersectionID(current));
         strcat(route, " -> ");
         totalDistance += minDistance;
 
-        // Lanjutkan ke simpang tujuan dari jalan terpendek
         current = firstIntersection(N);
         while (current != nullptr && strcmp(intersectionID(current), destIntersectionID(shortestRoad)) != 0) {
             current = nextIntersection(current);
         }
     }
 
-    // Tambahkan simpang tujuan ke rute
     strcat(route, targetIntersectionID);
 
-    // Tampilkan hasil
     cout << "Rute Darurat:" << endl;
     cout << route << endl;
     cout << "Total Panjang: " << totalDistance << " km" << endl;
